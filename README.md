@@ -1,6 +1,6 @@
 # Mapping the 2010 English Indices of Multiple Deprivation.
 
-This is the code for the map explorer for [OpenDataCommunities](http://opendatacommunities.org/imd_mapper/map.html Indices of Multiple Deprivation data.
+This is the code for the map explorer for [OpenDataCommunities](http://opendatacommunities.org/imd_mapper/map.html) Indices of Multiple Deprivation data.
 
 ## How we built it
 
