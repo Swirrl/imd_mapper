@@ -1,10 +1,10 @@
 * Mapping the 2010 English Indices of Multiple Deprivation.
 
-This is the code for the map explorer for [OpenDataCommunities](http://opendatacommunities.org/imd_mapper/map.html Indices of Multiple Deprivation data.
+This is the code for the app at http://opendatacommunities.org/imd_mapper/map.html
 
 * How we built it
 
-We're writing a series of blog on the [Learn Linked Data blog](http://learnlinkeddata.com/articles/lets-make-a-linked-data-app-mapping-imd-stats), to explain the process we went through to build this.
+We're writing a series of blog posts [here](http://learnlinkeddata.com/articles/lets-make-a-linked-data-app-mapping-imd-stats), to explain the process we went through to build this.
 
 * License
 
