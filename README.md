@@ -4,7 +4,7 @@ This is the code for the [map explorer](http://opendatacommunities.org/imd_mappe
 
 ## How we built it
 
-We're writing a series of blog on the [Learn Linked Data blog](http://learnlinkeddata.com/articles/lets-make-a-linked-data-app-mapping-imd-stats), to explain the process we went through to build this.
+We're writing a series of articles on the [Learn Linked Data blog](http://learnlinkeddata.com/articles/lets-make-a-linked-data-app-mapping-imd-stats), to explain the process we went through to build this.
 
 ## License
 
