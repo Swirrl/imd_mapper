@@ -1,0 +1,165 @@
+<!doctype html>
+<html>
+<head>
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+  <title>IMD Map Explorer</title>
+  <link rel="stylesheet" type="text/css" href="/stylesheets/map.css" />
+  <script type = "text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false&region=GB"></script>
+  <script type = "text/javascript" src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
+  <script src="javascripts/raphael.js"></script>
+  <script src="javascripts/smoothcurves.js"></script>
+  <script src="javascripts/swirrl.js"></script>
+  <script src="javascripts/swirrl/array.js"></script>
+  <script src="javascripts/swirrl/view-helpers.js"></script>
+  <script src="javascripts/swirrl/score-domain-config.js"></script>
+  <script src="javascripts/swirrl/map-manager.js"></script>
+  <script src="javascripts/swirrl/sidebar-manager.js"></script>
+  <script src="javascripts/swirrl/postcode-manager.js"></script>
+</head>
+<body>
+  <div id="container">
+    <div id="info">
+      <div id="search">
+      <form id="postcode_form" action="#">
+        Centre on postcode:<input type="text" id="postcode"/>
+        <input type="submit" value="go" />
+      </form>
+      </div>
+      <div id="lsoa">
+        <div style="margin-top:10px">Click or tap on an area in the map to see more information about it.</div>
+      </div>
+      <div id="credits">
+        <div>
+          <img src="/images/question_mark.png"/>
+          <h4>What am I looking at?</h4>
+        </div>
+        <p style="clear:left">The map shows the <a href="http://en.wikipedia.org/wiki/ONS_coding_system" target="_blank">Lower Layer Super Output Areas</a> (LSOAs) in England, coloured to
+        indicate the level of deprivation in the area. You can use the drop down in the bottom-right of the map to switch between the different deprivation indicators.
+        </p><p>
+        Data taken from from the <a href="http://opendatacommunities.org/" target="_blank">2010 Indices of Multiple Deprivation</a>, hosted on <a href="http://publishmydata.com" target="_blank">PublishMyData</a>.</p>
+        <p>Made by <a href="http://swirrl.com" target="_blank">Swirrl</a> in 2011.</p>
+      </div>
+    </div>
+    <div id="map_canvas"></div>
+    <div id="zoom_warning" style="display:none"><div class="words">Zoom-level too wide. Please zoom in to see the LSOAs</div></div>
+    <div id="busy_notice" style="display:none"><img src="/images/working.gif"/><div class="words">Working...</div></div>
+    <select id="domain">
+      <option value="IMD-score">Combined Score</option>
+      <option value="IMD-housing-score">Housing</option>
+      <option value="IMD-crime-score">Crime</option>
+      <option value="IMD-education-score">Education</option>
+      <option value="IMD-employment-score">Employment</option>
+      <option value="IMD-health-score">Health</option>
+      <option value="IMD-income-score">Income</option>
+      <option value="IMD-environment-score">Environment</option>
+    </select>
+    <div id="colour_key_container">
+      <div id="colour_key"></div>
+    </div>
+    <div style="display:none" id="templates">
+      <div class="lsoa_template">
+        <h3><a href="#" target="_blank">label</a></h3>
+        <span class="score_name"></span>: <a href="#" target="_blank" class="observation"><span class="score_value"></span></a><br/>
+        <div class="distro">
+          <div class="bg"></div>
+          <div class="graph"></div>
+        </div>
+        Min: <span class="min_score"></span>, Max: <span class="max_score"></span><br/>
+        <span style="font-size:10px"><em>Note: A higher score means the area is more deprived</em></span><br/>
+      <div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    (function(){
+      var mapManager
+        , idleListener = null
+        , startTime
+        , map = new google.maps.Map(document.getElementById("map_canvas"), {
+            zoom: 14,
+            center: new google.maps.LatLng(53.48, -2.245), // Manchester
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+            streetViewControl: false
+          });
+
+      // draw the colour spectrum.
+      window.swirrl.viewHelpers.drawColourKey();
+
+      // make some manager objects
+      var mapManager = new swirrl.MapManager(map, "IMD-score"); // initialize with the overall score.
+      var sidebarManager = new swirrl.SidebarManager();
+      var postcodeManager = new swirrl.PostcodeManager();
+
+      // Handle events coming out of the Map Manager.
+      $(mapManager).bind('started', function() {
+        startTime = new Date();
+        if(idleListener) {
+          google.maps.event.removeListener(idleListener);
+          idleListener = null;
+        }
+        $("#busy_notice").show();
+      });
+
+      $(mapManager).bind('finished', function() {
+        window.swirrl.log('busy duration: ' + (new Date() - startTime) + ' ms');
+        $("#busy_notice").hide();
+        bindMapIdle();
+      });
+
+      $(mapManager).bind('zoomTooWide', function() {
+        if (!$("#zoom_warning").is(":visible")) {
+          $("#zoom_warning").show();
+        }
+      });
+
+      $(mapManager).bind('zoomOK', function() {
+        if ($("#zoom_warning").is(":visible")) {
+          $("#zoom_warning").hide();
+        }
+      });
+
+      $(mapManager).bind('polygonClick', function(e, lsoaNotation, data) {
+        sidebarManager.populate(lsoaNotation, data, $('#domain').val());
+      });
+
+      // handle events coming out of the postcodeManager
+      $(postcodeManager).bind('invalidPostcode', function(){
+        alert('please enter a valid postcode');
+      });
+
+      $(postcodeManager).bind('postcodeFound', function(e, lat, lng){
+        map.panTo(new google.maps.LatLng(lat, lng));
+        mapManager.refresh();
+      });
+
+      // function to wire up the idleListener
+      var bindMapIdle = function() {
+        // if we don't already have an idle-listener, bind one up.
+        // (fires when the map bounds haven't changed for a bit)
+        if (!idleListener) {
+          idleListener = google.maps.event.addListener(map, 'idle', function(e) {
+            mapManager.refresh();
+          });
+        }
+      }
+
+      // bind the select box
+      $('#domain').change( function(e){
+        mapManager.changeScoreDomain($(this).val());
+        sidebarManager.clear();
+      });
+
+      // bind the postcode form
+      $("#postcode_form").submit(function(e){
+        e.preventDefault();
+        postcodeManager.lookup($(this).find("input[type=text]").val());
+      });
+
+      // Finally, start listening to Map-Idle events.
+      bindMapIdle();
+
+    })();
+  </script>
+
+</body>
+</html>
