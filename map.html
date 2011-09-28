@@ -4,8 +4,13 @@
   <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
   <title>IMD Map Explorer</title>
   <link rel="stylesheet" type="text/css" href="stylesheets/map.css" />
-  <script type = "text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false&region=GB"></script>
-  <script type = "text/javascript" src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
+
+  <link type="text/css" href="javascripts/jquery-ui-1.8.16.custom/css/ui-darkness/jquery-ui-1.8.16.custom.css" rel="stylesheet" />
+
+  <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false&region=GB"></script>
+  <script type="text/javascript" src="javascripts/jquery-ui-1.8.16.custom/js/jquery-1.6.2.min.js"></script>
+  <script type="text/javascript" src="javascripts/jquery-ui-1.8.16.custom/js/jquery-ui-1.8.16.custom.min.js"></script>
+
   <script src="javascripts/raphael.js"></script>
   <script src="javascripts/smoothcurves.js"></script>
   <script src="javascripts/swirrl.js"></script>
@@ -20,7 +25,7 @@
   <div id="container">
     <div id="info">
       <div id="search">
-      <form id="postcode_form" action="#">
+      <form class="postcode_form" action="#">
         Centre on postcode:<input type="text" id="postcode"/>
         <input type="submit" value="go" />
       </form>
@@ -67,6 +72,15 @@
         Min: <span class="min_score"></span>, Max: <span class="max_score"></span><br/>
         <span style="font-size:10px"><em>Note: A higher score means the area is more deprived</em></span><br/>
       <div>
+      <div id="splash" title="Deprivation Mapper">
+        <p>The map shows the Lower Layer Super Output Areas (LSOAs) in England, coloured to indicate the level of deprivation in the area.</p>
+        <p>Start by searching for a postcode:</p>
+        <form class="postcode_form" action="#">
+          postcode: <input type="text" id="postcode"/>
+          <input type="submit" value="go" />
+        </form>
+        <p>...or just close the dialog drag &amp; zoom the map</p>
+      </div>
     </div>
   </div>
 
@@ -129,6 +143,7 @@
 
       $(postcodeManager).bind('postcodeFound', function(e, lat, lng){
         map.panTo(new google.maps.LatLng(lat, lng));
+        $("#splash").dialog('close')
         mapManager.refresh();
       });
 
@@ -150,13 +165,15 @@
       });
 
       // bind the postcode form
-      $("#postcode_form").submit(function(e){
+      $(".postcode_form").submit(function(e){
         e.preventDefault();
         postcodeManager.lookup($(this).find("input[type=text]").val());
       });
 
       // Finally, start listening to Map-Idle events.
       bindMapIdle();
+
+      $("#splash").dialog({ modal: true });
 
     })();
   </script>

@@ -33,7 +33,7 @@
   #info #lsoa {
     width: 260px;
     background: #EEE;
-    z-index:9999;
+    z-index:999;
     position:absolute;
   }
   #info #lsoa .distro {
@@ -63,7 +63,7 @@
   #zoom_warning, #busy_notice {
     font-size: 12px;
     height: 20px;
-    z-index:9999;
+    z-index:999;
     border: 1px solid #CCC;
     color: #333;
     bottom: 4px;
@@ -105,7 +105,7 @@
     float:left; padding-top:8px; padding-right:3px; margin-left:-8px;
   }
   #domain {
-    z-index: 9999;
+    z-index: 999;
     width: 202px;
     bottom: 70px;
     right: 305px;
@@ -113,7 +113,7 @@
     position: absolute;
   }
   #colour_key_container {
-    z-index: 9999;
+    z-index: 999;
     border: 2px solid #eee;
     height: 40px;
     width: 200px;
