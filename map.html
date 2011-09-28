@@ -79,7 +79,7 @@
           postcode: <input type="text" id="postcode"/>
           <input type="submit" value="go" />
         </form>
-        <p>...or just close this dialog and drag/zoom the map</p>
+        <p>or just <a href="#" class="dialog_close">close this dialog</a> and drag/zoom the map.</p>
       </div>
     </div>
   </div>
@@ -143,7 +143,7 @@
 
       $(postcodeManager).bind('postcodeFound', function(e, lat, lng){
         map.panTo(new google.maps.LatLng(lat, lng));
-        $("#splash").dialog('close')
+        $("#splash").dialog('close');
         mapManager.refresh();
       });
 
@@ -174,6 +174,10 @@
       bindMapIdle();
 
       $("#splash").dialog({ modal: true });
+      $("#splash a.dialog_close").click(function(e) {
+        e.preventDefault();
+        $("#splash").dialog('close');
+      })
 
     })();
   </script>
