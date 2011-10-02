@@ -124,8 +124,8 @@
         newTiles.push(tile);
       }
     }
-    console.log('no of new tiles', newTiles.length);
-    console.log('new tiles', newTiles);
+    window.swirrl.log('no of new tiles', newTiles.length);
+    window.swirrl.log('new tiles', newTiles);
     return newTiles;
   };
 
