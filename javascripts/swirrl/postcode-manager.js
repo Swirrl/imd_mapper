@@ -24,7 +24,7 @@
             $(self).trigger('invalidPostcode');
 
           },
-          dataType: 'jsonp' // make this use jsonp - as this is on a different domain.
+          dataType: 'json'
         }
       )
     }
