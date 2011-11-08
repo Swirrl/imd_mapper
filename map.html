@@ -7,29 +7,33 @@
 
   <link type="text/css" href="javascripts/jquery-ui-1.8.16.custom/css/ui-darkness/jquery-ui-1.8.16.custom.css" rel="stylesheet" />
 
-  <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-  <![endif]-->
-
   <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false&region=GB"></script>
   <script type="text/javascript" src="javascripts/jquery-ui-1.8.16.custom/js/jquery-1.6.2.min.js"></script>
   <script type="text/javascript" src="javascripts/jquery-ui-1.8.16.custom/js/jquery-ui-1.8.16.custom.min.js"></script>
 
-  <script src="javascripts/raphael.js"></script>
-  <script src="javascripts/smoothcurves.js"></script>
-  <script src="javascripts/swirrl.js"></script>
-  <script src="javascripts/swirrl/array.js"></script>
-  <script src="javascripts/swirrl/view-helpers.js"></script>
-  <script src="javascripts/swirrl/score-domain-config.js"></script>
-  <script src="javascripts/swirrl/map-manager.js"></script>
-  <script src="javascripts/swirrl/sidebar-manager.js"></script>
-  <script src="javascripts/swirrl/postcode-manager.js"></script>
+  <script type="text/javascript" src="javascripts/raphael.js"></script>
+  <script type="text/javascript" src="javascripts/smoothcurves.js"></script>
+  <script type="text/javascript" src="javascripts/swirrl.js"></script>
+  <script type="text/javascript" src="javascripts/swirrl/array.js"></script>
+  <script type="text/javascript" src="javascripts/swirrl/view-helpers.js"></script>
+  <script type="text/javascript" src="javascripts/swirrl/score-domain-config.js"></script>
+  <script type="text/javascript" src="javascripts/swirrl/map-manager.js"></script>
+  <script type="text/javascript" src="javascripts/swirrl/sidebar-manager.js"></script>
+  <script type="text/javascript" src="javascripts/swirrl/postcode-manager.js"></script>
 </head>
 <body>
-  <!--[if IE]>
+  <script type="text/javascript">
+    var isIE = false;
+  </script>
+  <!--[if lt IE 9 ]>
   <div style="font-size:15px; background: lemonChiffon; padding:10px;">
     Please note: This site has not been tested on Internet Explorer. We recommend you view it in Firefox, Chrome or Safari.
   </div>
+  <![endif]-->
+  <!--[if IE]>
+  <script type="text/javascript">
+    isIE = true;
+  </script>
   <![endif]-->
   <div id="container">
     <div id="info">

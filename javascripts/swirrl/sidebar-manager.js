@@ -70,7 +70,7 @@
 
     var drawCurrentValLine = function(paper, minX, minY, maxX, maxY, width, height, normalisedScore){
       pathString = "M" + normalisedScore.toString() + ",0";
-      pathString += "L" + normalisedScore.toString() + "," + maxY;
+      pathString += "L" + normalisedScore.toString() + "," + height;
       var path = paper.path(pathString).attr({stroke: "#333", 'stroke-width': 2, "stroke-dasharray": "."});
     };
 
@@ -87,7 +87,17 @@
     var xAxis = "M14," + (bgHeight-14).toString() + "L" + bgWidth.toString() + "," + (bgHeight-14).toString();
     bgPaper.path(yAxis).attr({ stroke:'#555'});
     bgPaper.path(xAxis).attr({ stroke:'#555'});
-    bgPaper.text(5, (bgHeight/2)-10, "Frequency").attr({fill:"#555", "font-size":"9px", "text-anchor": "middle", "font-weight": "lighter", rotation:270});
+    var freqX = 5;
+    var freqY = (bgHeight/2)-10;
+
+    if (isIE) {
+      // ie handles rotation differently, so we need to position it slightly differently.
+      window.swirrl.log('IE!');
+      freqX = -30;
+      freqY = (bgHeight/2);
+    }
+
+    bgPaper.text(freqX, freqY, "Frequency").attr({fill:"#555", "font-size":"9px", "text-anchor": "middle", "font-weight": "lighter", rotation:270});
     bgPaper.text(bgWidth-5, bgHeight-5, "Level of deprivation").attr({fill:"#555", "font-size":"9px", "font-weight": "lighter", "text-anchor": "end"});
 
     // now draw the graph
