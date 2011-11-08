@@ -9,8 +9,7 @@
   PostcodeManager.prototype = {
     lookup: function(postcode) {
       var uppercasePostcode = postcode.split(' ').join('').toUpperCase() ;
-      var url = 'http://publishmydata.com/resources/data.ordnancesurvey.co.uk/id/postcodeunit/' + uppercasePostcode + '?format=json';
-
+      var url = 'http://opendatacommunities.org/resources/data.ordnancesurvey.co.uk/id/postcodeunit/' + uppercasePostcode + '?format=json';
       $.ajax(
         url,
         {
