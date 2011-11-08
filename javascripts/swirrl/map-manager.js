@@ -265,7 +265,7 @@
           timeout: 10000,
           dataType: 'json'
         }
-      )
+      );
     });
   };
 
