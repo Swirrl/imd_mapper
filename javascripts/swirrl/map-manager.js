@@ -352,7 +352,7 @@
             $(self).trigger('dataError');
           },
           dataType: 'json',
-          timeout: 10000, // timeout after a short time.
+          timeout: 10000 // timeout after a short time.
         }
       );
     };
