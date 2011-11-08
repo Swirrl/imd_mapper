@@ -156,7 +156,7 @@
 
     // for longs we have to account for the minus sign.
     var divideLongByTen = function(longx10){
-      var lng = ""
+      var lng = "";
       if (longx10[0] == "-") {
         // negative values
         if (longx10.length == 2){
@@ -181,7 +181,7 @@
 
       // edge case: convert -0.0 to 0.0
       if (lng == "-0.0") {
-        lng = "0.0"
+        lng = "0.0";
       }
 
       return lng;
