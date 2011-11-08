@@ -63,7 +63,7 @@
       var score = minScore;
       drawKeyLine(score, lineNo);
 
-      while (score <= maxScore) {
+      while (lineNo < noOfLines-1) {
         lineNo++;
         score += scoreIncrement;
         drawKeyLine(score, lineNo);
