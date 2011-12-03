@@ -6,6 +6,11 @@
     map = googleMap;
     scoreDomain = initialScoreDomain;
 
+    if (oldIE) {
+      // oldIE's can't handle zooming out as far!
+      minZoom = 13;
+    }
+
     $(this).bind('boundaryDataRetrieved', function() {
       boundaryDataRetrieved = true;
       refreshPolygonsWhenReady();
