@@ -24,10 +24,17 @@
 <body>
   <script type="text/javascript">
     var isIE = false;
+    var oldIE = false;
   </script>
   <!--[if lt IE 9]>
+  <script type="text/javascript">
+    oldIE = true;
+  </script>
+  <![endif]-->
+  <!--[if lt IE 8]>
   <div style="font-size:15px; background: lemonChiffon; padding:10px;">
-    This site hasn't been tested on older versions of IE. Please use at least IE9 ...or a recent version of Firefox, Chrome or Safari!
+    This site hasn't been tested on older versions of IE. Please use at least IE8 ...or a recent version of Firefox, Chrome or Safari!
+    var oldIE = true;
   </div>
   <![endif]-->
   <!--[if IE]>
@@ -167,7 +174,16 @@
         // (fires when the map bounds haven't changed for a bit)
         if (!idleListener) {
           idleListener = google.maps.event.addListener(map, 'idle', function(e) {
-            mapManager.refresh();
+            if (oldIE) {
+              // this fixes a problem in IE<8 where the idle listener just fires instantly!
+              setTimeout(
+                function() { mapManager.refresh(); },
+                300
+              );
+            }
+            else {
+              mapManager.refresh();
+            }
           });
         }
       }
