@@ -294,11 +294,24 @@
       "    ?lsoa geo:long ?long . " +
       "    ?lsoa <http://www.w3.org/2004/02/skos/core#notation> ?notation . " +
       "    ?lsoa rdfs:label ?label . " +
-      "  } " +
-      "  GRAPH <http://opendatacommunities.org/id/graph/IMD/2010/" + scoreDomain + "> {  " +
-      "    ?obs <http://purl.org/linked-data/sdmx/2009/dimension#refArea> ?lsoa . " +
-      "    ?obs <http://opendatacommunities.org/def/IMD#" + scoreDomain + "> ?score . " +
-      "  } " +
+      "  } ";
+
+
+      if (scoreDomain == 'score') {
+        sparql += "  GRAPH <http://opendatacommunities.org/graph/imd-score-2010> {  ";
+      } else {
+        sparql += "  GRAPH <http://opendatacommunities.org/graph/imd-" + scoreDomain + "-score-2010> {  ";
+      }
+
+      sparql += "    ?obs <http://purl.org/linked-data/sdmx/2009/dimension#refArea> ?lsoa . ";
+
+      if (scoreDomain == 'score') {
+        sparql += "    ?obs <http://opendatacommunities.org/def/IMD#IMD-score> ?score . ";
+      } else {
+        sparql += "    ?obs <http://opendatacommunities.org/def/IMD#IMD-" + scoreDomain + "-score> ?score . ";
+      }
+
+      sparql += "  } " +
       "  FILTER ( ?lat >= " + lowerLat + " && " +
       "    ?lat < " + upperLat + " && " +
       "    ?long >= " + lowerLong + " && " +

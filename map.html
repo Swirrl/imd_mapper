@@ -68,14 +68,14 @@
     <div id="zoom_warning" style="display:none"><div class="words">Zoom-level too wide. Please zoom in to see the LSOAs</div></div>
     <div id="busy_notice" style="display:none"><img src="images/working.gif"/><div class="words">Working...</div></div>
     <select id="domain">
-      <option value="IMD-score">Combined Score</option>
-      <option value="IMD-housing-score">Housing</option>
-      <option value="IMD-crime-score">Crime</option>
-      <option value="IMD-education-score">Education</option>
-      <option value="IMD-employment-score">Employment</option>
-      <option value="IMD-health-score">Health</option>
-      <option value="IMD-income-score">Income</option>
-      <option value="IMD-environment-score">Environment</option>
+      <option value="score">Combined Score</option>
+      <option value="housing">Housing</option>
+      <option value="crime">Crime</option>
+      <option value="education">Education</option>
+      <option value="employment">Employment</option>
+      <option value="health">Health</option>
+      <option value="income">Income</option>
+      <option value="environment">Environment</option>
     </select>
     <div id="colour_key_container">
       <div id="colour_key"></div>
@@ -120,7 +120,7 @@
       window.swirrl.viewHelpers.drawColourKey();
 
       // make some manager objects
-      var mapManager = new swirrl.MapManager(map, "IMD-score"); // initialize with the overall score.
+      var mapManager = new swirrl.MapManager(map, "score"); // initialize with the overall score.
       var sidebarManager = new swirrl.SidebarManager();
       var postcodeManager = new swirrl.PostcodeManager();
 
