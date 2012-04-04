@@ -14,7 +14,12 @@
 
       var currentScoreDomainConfig = window.swirrl.scoreDomainConfig[scoreDomain];
 
-      lsoaTemplate.find("a.observation").attr('href', 'http://opendatacommunities.org/id/IMD/2010/' + scoreDomain + '/LSOA/' + lsoaNotation );
+      if (scoreDomain == 'score') {
+        lsoaTemplate.find("a.observation").attr('href', 'http://opendatacommunities.org/id/IMD/2010/IMD-score/LSOA/' + lsoaNotation );
+      } else {
+        lsoaTemplate.find("a.observation").attr('href', 'http://opendatacommunities.org/id/IMD/2010/IMD-' + scoreDomain + '-score/LSOA/' + lsoaNotation );
+      }
+
       lsoaTemplate.find(".score_value").html(data.score);
       lsoaTemplate.find(".score_name").html(currentScoreDomainConfig['human-name']);
       lsoaTemplate.find(".max_score").html(currentScoreDomainConfig['max']);
