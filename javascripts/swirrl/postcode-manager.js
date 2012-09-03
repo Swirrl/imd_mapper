@@ -2,12 +2,18 @@
 
   // the constructor.
   var PostcodeManager = function() {
-    self = this;
-  };
 
-  // public api.
-  PostcodeManager.prototype = {
-    lookup: function(postcode) {
+    ///////////////////////////////////
+    // private vars
+    var self;
+
+    ///////////////////////////////////
+    // run some setup...
+    self = this;
+
+    ///////////////////////////////////
+    // public api (priveliged functions)
+    this.lookup = function(postcode) {
       var uppercasePostcode = postcode.split(' ').join('').toUpperCase();
       var url = 'http://opendatacommunities.org/resources/data.ordnancesurvey.co.uk/id/postcodeunit/' + uppercasePostcode + '?format=json';
       $.ajax(
@@ -26,12 +32,8 @@
           dataType: 'json'
         }
       );
-    }
+    };
   };
-
-  // private variables
-
-  var self;
 
   window.swirrl.PostcodeManager = PostcodeManager;
 })();
